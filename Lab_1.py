@@ -221,6 +221,11 @@ def count_words(s):
 def sort_by_word_num():
     strings = []
     while True:
+        s = input()
+        if s == "":
+            break
+        strings.append(s)
+        
         
 
 #=============== Задания 11-14 (1, 4, 7, 10) ===============
