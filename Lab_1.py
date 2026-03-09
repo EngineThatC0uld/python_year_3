@@ -225,8 +225,11 @@ def sort_by_word_num():
         if s == "":
             break
         strings.append(s)
-        
-        
+    strings.sort(key = count_words)
+    return strings
+
+result = sort_by_word_num()
+print(result)
 
 #=============== Задания 11-14 (1, 4, 7, 10) ===============
 
