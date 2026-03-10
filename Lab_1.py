@@ -214,26 +214,67 @@ def is_prime(n):
 
 
 #=============== Задание 10 ===============
-def count_words(s):
-    words = s.split()
-    return len(words)
+# def count_words(s):
+#     words = s.split()
+#     return len(words)
 
-def sort_by_word_num():
-    strings = []
-    while True:
-        s = input()
-        if s == "":
-            break
-        strings.append(s)
-    strings.sort(key = count_words)
-    return strings
+# def sort_by_word_num():
+#     strings = []
+#     while True:
+#         s = input()
+#         if s == "":
+#             break
+#         strings.append(s)
+#     strings.sort(key = count_words)
+#     return strings
 
-result = sort_by_word_num()
-print(result)
+# result = sort_by_word_num()
+# print(result)
 
 #=============== Задания 11-14 (1, 4, 7, 10) ===============
 
-#1
+# #1
+# def number_vowel(s):
+#     count = 0
+#     vowels = ['a', 'e', 'u', 'i', 'o', 'y']
+#     for char in s.lower():
+#         if char in vowels:
+#             count += 1
+#     return count
+
+# def number_consonant(s):
+#     count = 0
+#     consonants = ['q', 'z', 'w', 's', 'x', 'd', 'c', 'r', 'f', 'v', 't', 'g', 'b', 'h', 'n', 'j', 'm', 'k', 'm', 'l', 'p']
+#     for char in s.lower():
+#         if char in consonants:
+#             count += 1
+#     return count
+
+# def sr_vowel_cons(s):
+#     vowels = number_vowel(s)
+#     consonants = number_consonant(s)
+#     number_of_chars = vowels + consonants
+#     if number_of_chars == 0:
+#         return 0
+#     avg_vowels = vowels / number_of_chars
+#     avg_consonants = consonants / number_of_chars
+#     return abs(avg_consonants - avg_vowels)
+
+# def sort_vowel_consonant():
+#     strings = []
+#     while True:
+#         s = input()
+#         if s == "":
+#             break
+#         strings.append(s)
+#     strings.sort(key = sr_vowel_cons)
+#     return strings
+
+# strings = sort_vowel_consonant()
+# print(strings)
+
+#4
+
 
 
 
