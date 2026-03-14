@@ -196,6 +196,7 @@ def is_prime(n):
 #     return max_count
 
 
+
 #=============== Задание 9 ===============
 # def sort_strings():
 #     strings = []
@@ -273,7 +274,97 @@ def is_prime(n):
 # strings = sort_vowel_consonant()
 # print(strings)
 
-#4
+# #4
+# def solve(strings):
+#     if not strings: 
+#         return strings
+#     first_avg = sum(ord(ch) for ch in strings[0]) / len(strings[0])
+#     deviations = []
+#     for s in strings:
+#         avg = sum(ord(ch) for ch in s) / len(s)
+#         #квадратичное отклонение
+#         deviation = (avg - first_avg) ** 2
+#         deviations.append((deviation, s))
+#     return [s for _, s in sorted(deviations)]
+
+# strings = [
+#     "aaa",      # 97, маленькое отклонение
+#     "zzz",      # 122, большое отклонение  
+#     "hello",    # первая строка
+#     "b",        # 98, маленькое отклонение
+#     "ZZZ"       # 90, ещё меньше
+# ]
+
+# result = solve(strings)
+# print(result)
+
+# #7
+# def sort_vowel_cons(string):
+#     vowels = set('aeuio')
+
+#     vc = 0 #гласная + согласная
+#     cv = 0 #согласная + гласная
+
+#     for i in range(len(string) - 1):
+#         current = string[i]
+#         next_char = string[i + 1]
+
+#         if current.isalpha() and next_char.isalpha():
+#             if current in vowels and next_char not in vowels:
+#                 vc += 1
+#             elif current not in vowels and next_char in vowels:
+#                 cv += 1
+#     return vc - cv
+
+# def solve(strings):
+#     if not strings:
+#         return strings
+#     return sorted(strings, key = sort_vowel_cons)
+
+# strings = [
+#     "hello",
+#     "world",
+#     "python",
+#     "abc",
+#     "aei",     # только гласные
+#     "bcdf",    # только согласные
+#     "abacaba"
+# ]
+
+# result = solve(strings)
+# print("Исходный порядок:", strings)
+# print("Отсортировано:    ", result)
+
+#10
+def avg_mirrored(string):
+    #ffghhvada
+    count = 0
+    for i in range(len(string) - 2):
+        if string[i] == string[i + 2] and string[i] != string[i + 1]:
+            count += 1
+    return count / len(string)
+
+def solve(strings):
+    if not strings:
+        return strings
+    return sorted(strings, key = avg_mirrored)
+
+test_strings = [
+        "ada",           # 1 тройка (ada), длина 3 → 1/3 ≈ 0.333
+        "abacaba",       # Тройки: aba(0-2), aca(2-4), aba(4-6) → 3/7 ≈ 0.429
+        "hello",         # нет троек → 0/5 = 0
+        "aaa",           # нет (все символы равны) → 0/3 = 0
+        "abcabc",        # нет → 0/6 = 0
+        "abac",          # aba(0-2) → 1/4 = 0.25
+        "xoxox",         # xox(0-2), oxo(1-3), xox(2-4) → 3/5 = 0.6
+        "aba ba cab",    # с пробелами: aba(0-2), aba(6-8?) проверим
+        "a",             # длина < 3 → 0/1 = 0
+        "ab",            # длина < 3 → 0/2 = 0
+    ]
+
+print(solve(test_strings))
+
+
 
 
 
