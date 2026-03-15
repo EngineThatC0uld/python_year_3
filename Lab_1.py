@@ -1,7 +1,7 @@
 import re
 
 def is_prime(n):
-    for i in range(2, n // 2 + 1):
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
             return False
     return True
@@ -85,7 +85,53 @@ def is_prime(n):
 #=============== Задание 5 ===============
 
 #5
+def find_dates_simple(text):
+    # Регулярное выражение для поиска потенциальных дат
+    pattern = r'(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)\s+(\d{4})'
+    
+    months = {
+        'января': 1, 'февраля': 2, 'марта': 3, 'апреля': 4,
+        'мая': 5, 'июня': 6, 'июля': 7, 'августа': 8,
+        'сентября': 9, 'октября': 10, 'ноября': 11, 'декабря': 12
+    }
+    
+    # Максимальное количество дней в месяцах (для невисокосного года)
+    month_days = {
+        1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
+        7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
+    }
+    
+    def is_leap_year(year):
+        """Проверка на високосный год"""
+        return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+    
+    def get_max_days(month, year):
+        """Получение максимального количества дней в месяце"""
+        if month == 2 and is_leap_year(year):
+            return 29
+        return month_days[month]
+    
+    found_dates = []
+    
+    for match in re.finditer(pattern, text, re.IGNORECASE):
+        day = int(match.group(1))
+        month_name = match.group(2).lower()
+        year = int(match.group(3))
+        month = months[month_name]
+        
+        max_days = get_max_days(month, year)
+        
+        if 1 <= day <= max_days:
+            found_dates.append(match.group(0))
+        else:
+            print(f"Некорректная дата: {match.group(0)}")
+    
+    return found_dates
 
+# Пример использования
+text = "31 февраля 2007, 15 мая 2023, 29 февраля 2020, 31 ноября 2023"
+valid_dates = find_dates_simple(text)
+print("Корректные даты:", valid_dates)
 
 #=============== Задания 6-8 (1, 9, 18) ===============
 
@@ -335,38 +381,135 @@ def is_prime(n):
 # print("Исходный порядок:", strings)
 # print("Отсортировано:    ", result)
 
-#10
-def avg_mirrored(string):
-    #ffghhvada
-    count = 0
-    for i in range(len(string) - 2):
-        if string[i] == string[i + 2] and string[i] != string[i + 1]:
-            count += 1
-    return count / len(string)
+# #10
+# def avg_mirrored(string):
+#     #ffghhvada
+#     count = 0
+#     for i in range(len(string) - 2):
+#         if string[i] == string[i + 2] and string[i] != string[i + 1]:
+#             count += 1
+#     return count / len(string)
 
-def solve(strings):
-    if not strings:
-        return strings
-    return sorted(strings, key = avg_mirrored)
+# def solve(strings):
+#     if not strings:
+#         return strings
+#     return sorted(strings, key = avg_mirrored)
 
-test_strings = [
-        "ada",           # 1 тройка (ada), длина 3 → 1/3 ≈ 0.333
-        "abacaba",       # Тройки: aba(0-2), aca(2-4), aba(4-6) → 3/7 ≈ 0.429
-        "hello",         # нет троек → 0/5 = 0
-        "aaa",           # нет (все символы равны) → 0/3 = 0
-        "abcabc",        # нет → 0/6 = 0
-        "abac",          # aba(0-2) → 1/4 = 0.25
-        "xoxox",         # xox(0-2), oxo(1-3), xox(2-4) → 3/5 = 0.6
-        "aba ba cab",    # с пробелами: aba(0-2), aba(6-8?) проверим
-        "a",             # длина < 3 → 0/1 = 0
-        "ab",            # длина < 3 → 0/2 = 0
-    ]
+# test_strings = [
+#         "ada",           # 1 тройка (ada), длина 3 → 1/3 ≈ 0.333
+#         "abacaba",       # Тройки: aba(0-2), aca(2-4), aba(4-6) → 3/7 ≈ 0.429
+#         "hello",         # нет троек → 0/5 = 0
+#         "aaa",           # нет (все символы равны) → 0/3 = 0
+#         "abcabc",        # нет → 0/6 = 0
+#         "abac",          # aba(0-2) → 1/4 = 0.25
+#         "xoxox",         # xox(0-2), oxo(1-3), xox(2-4) → 3/5 = 0.6
+#         "aba ba cab",    # с пробелами: aba(0-2), aba(6-8?) проверим
+#         "a",             # длина < 3 → 0/1 = 0
+#         "ab",            # длина < 3 → 0/2 = 0
+#     ]
 
-print(solve(test_strings))
-
-
-
-
-
+# print(solve(test_strings))
 
 #=============== Задания 15-19 (1, 13, 25, 37, 49) ===============
+
+# #1 
+# def find_after_last_maxi(arr):
+#     if not arr:
+#         return arr
+#     max_val = max(arr)
+#     last_max_index = len(arr) - 1 - arr[::-1].index(max_val) #очень сложно...
+#     return len(arr) - last_max_index - 1
+
+# test = [1, 2, 3, 2, 1]
+# test = [5, 1, 5, 2, 5, 3]
+# print(find_after_last_maxi(test))
+
+# #13
+# def rearrange_before_min(arr):
+#     if not arr:
+#         return arr
+    
+#     min_val = min(arr)
+#     min_val_index = arr.index(min_val)
+#     if min_val_index == 0:
+#         return arr
+
+#     result = arr[min_val_index:] + arr[:min_val_index]
+#     return result
+
+# arr = [3, 5, 1, 7, 2, 8]
+# print(rearrange_before_min(arr))
+
+# #25
+# def find_max_on_interval(arr, a, b):
+#     if not arr:
+#         return None
+#     if a < 0 or a >= len(arr) or b < a:
+#         return None 
+#     end = min(b, len(arr) - 1)
+#     max_on_interval = max(arr[a:end+1])
+#     return max_on_interval
+
+# arr = [3, 7, 1, 9, 4, 2, 8, 5]
+# a = 1
+# b = 4
+# print(find_max_on_interval(arr, a, b))
+
+# #37
+# def find_less_left(arr):
+#     indexes = []
+#     count = 0
+#     for i in range(1, len(arr)):
+#         if arr[i] < arr[i - 1]:
+#             indexes.append(i)
+#             count += 1
+#     return indexes, count
+
+# def find_less_left_v2(arr):
+#     indexes = [i for i in range(1, len(arr)) if arr[i] < arr[i - 1]]
+#     return indexes, len(indexes)
+
+# arr = [5, 3, 7, 2, 8, 1]
+# print(find_less_left(arr))
+# print(find_less_left_v2(arr))
+
+#49
+
+# def prime_div(num):
+#     divs = []
+#     if is_prime(num):
+#         divs.append(num)
+#     else:
+#         for i in range(2, num // 2 + 1):
+#             if is_prime(i) and num % i == 0:
+#                 divs.append(i)
+#     return divs
+
+# def find_all_prime_div():
+#     arr = []
+#     while True:
+#         s = input()
+#         if s == "":
+#             break
+#         try:
+#             num = int(s)
+#             if num <= 0:
+#                 print("Enter positive numbers")
+#                 continue
+#             arr.append(num)
+#         except ValueError:
+#             print("Enter Integers only")
+#     if not arr:
+#         print("Array is empty")
+#         return set()
+
+#     divisors = set()
+#     for i in range(len(arr)):
+#         divisors.update(prime_div(arr[i]))
+#     return divisors
+
+# #14 21 35
+# #6 10 15
+# #12 30 18
+# a = find_all_prime_div()
+# print(a)
